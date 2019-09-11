@@ -21,6 +21,6 @@ S = imbinarize(med_fil,T)                                                  % Seg
 
 %L = watershed(S);
 %Lrgb = label2rgb(S);                                                       %Watershed Segmentation
-figure(2)
+figure(3)
 imshow(S)
 %thisisamritesh/BrainTumorExtractionFromMRI
