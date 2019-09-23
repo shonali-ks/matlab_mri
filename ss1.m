@@ -15,12 +15,3 @@ med_fil = medfilt2(i);                                                     %Appl
                                                                            %Enhances the quality of the image
                                                                            
                                                                            
-T = graythresh(med_fil)                                                    % find the threshold for input image
-S = imbinarize(med_fil,T)                                                  % Segment the image using threshold segmentation
-
-
-%L = watershed(S);
-%Lrgb = label2rgb(S);                                                       %Watershed Segmentation
-figure(3)
-imshow(S)
-%thisisamritesh/BrainTumorExtractionFromMRI
