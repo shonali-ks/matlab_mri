@@ -14,4 +14,8 @@ i = imfilter(single(gray), kernel1);                                       %Appl
 med_fil = medfilt2(i);                                                     %Applying Median Filter to the gray scale image
                                                                            %Enhances the quality of the image
                                                                            
+                                                                           %Applying gaussian filter to image for noise removal
                                                                            
+I=imgaussfilt(rgb,1);
+figure(3)
+imshow(I)
