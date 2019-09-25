@@ -3,7 +3,7 @@ rgb = imread('/home/student/Downloads/56.jpg');
 figure(1)
 imshow(rgb)
 gray = rgb2gray(rgb);  
-figure(2)%Converting to Gray Scale                             
+figure(2)                                                                   %Converting to Gray Scale                             
 imshow(gray);
 kernel1 = -1 * ones(3)/9;
 kernel1(2,2) = 8/9
