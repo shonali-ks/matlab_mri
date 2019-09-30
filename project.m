@@ -24,3 +24,6 @@ imshow(J)
 open = imopen(J,SE);
 figure(5)
 imshow(open)
+neg = imcomplement(open);
+figure(6)
+imshow(neg)
