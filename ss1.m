@@ -1,5 +1,5 @@
 rgb = imread('/home/student/Downloads/56.jpg'); 
-%Reading image
+                                                                             %Reading image
 figure(1)
 imshow(rgb)
 gray = rgb2gray(rgb);  
