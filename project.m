@@ -12,6 +12,7 @@ imshow(gray);
 kernel1 = -1 * ones(3)/9;
 kernel1(2,2) = 8/9;
 
+
 %Applying gaussian filter to image for noise removal
 
 gauss=imgaussfilt(gray,1);
@@ -76,3 +77,11 @@ imshow(BW)
 B = bwmorph(BW,'remove');
 figure(11)
 imshow(B)
+
+%contouring greyscaled image
+figure(12)
+imcontour(gray)
+
+%contouring tumour
+figure(13)
+imcontour(img3)
