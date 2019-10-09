@@ -72,3 +72,7 @@ BW = im2bw(img3,level);
 figure(10)
 imshow(BW)
 
+%boundary outline
+B = bwmorph(BW,'remove');
+figure(11)
+imshow(B)
