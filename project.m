@@ -21,14 +21,14 @@ gauss=imgaussfilt(gray,1);
 %Enhances the quality of the image
 %eroding the image
 
-SE = strel('diamond',6);
+SE = strel('diamond',10);
 I= imerode(gauss,SE);
 figure(3)
 imshow(I)
 
 %dialating the image
 
-se=strel('diamond',3);
+se=strel('diamond',5);
 J = imdilate(I,se);
 figure(4)
 imshow(J)
