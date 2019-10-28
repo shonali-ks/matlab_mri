@@ -85,3 +85,12 @@ imcontour(gray)
 %contouring tumour
 figure(13)
 imcontour(img3)
+
+%c-label of tumour
+figure(14)
+C = contour(img3);
+clabel(C)
+
+%contourf for tumour
+figure (15)
+contourf(img3)
