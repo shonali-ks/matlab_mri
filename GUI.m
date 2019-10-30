@@ -22,7 +22,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 28-Oct-2019 09:09:49
+% Last Modified by GUIDE v2.5 30-Oct-2019 16:22:06
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -103,20 +103,28 @@ function togglebutton1_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: get(hObject,'Value') returns toggle state of togglebutton1
- [filename pathname] = uigetfile({'*.jpg';'*.bmp'},'File Selector');
- handles.myImage = strcat(pathname, filename);
+ global im im2
+ [path,user]=imgetfile();
+ if user
+     msgbox(sprintf('error'),'error','error');
+     return;
+ end
+ im=imread(path);
+ im=im2double(im);
+ im2=im;
  axes(handles.axes1);
- imshow(handles.myImage)
- set(handles.edit1,'string',filename);
- set(handles.edit2,'string',image);
- % save the updated handles object
- guidata(hObject,handles);
+ imshow(im)
 
 % --- Executes on button press in pushbutton2.
 function pushbutton2_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+global im gray
+axes(handles.axes1);
+gray= rgb2gray(im);
+imshow(gray);
+
 
 
 % --- Executes on button press in pushbutton3.
@@ -124,6 +132,10 @@ function pushbutton3_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton3 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+global gray gauss
+axes(handles.axes1);
+gauss=imgaussfilt(gray,1);
+imshow(gauss);
 
 
 % --- Executes on button press in pushbutton4.
@@ -131,6 +143,31 @@ function pushbutton4_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton4 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+global gauss img3 BW
+SE = strel('diamond',10);
+I= imerode(gauss,SE);
+%dialating the image
+se=strel('diamond',5);
+J = imdilate(I,se);
+%using morphological open for background estimation
+open = imopen(J,SE);
+%negating the image
+neg = imcomplement(open);
+%subtracting eroded image with negated image
+img1=I-neg;
+%subracting eroded image with background estimated one
+img2=I-open;
+%subracting two images
+img3=img1-img2;
+%threshold of tumour
+level = graythresh(img3);
+BW = im2bw(img3,level);
+axes(handles.axes1)
+imshow(BW);
+
+
+
+
 
 
 % --------------------------------------------------------------------
@@ -145,3 +182,62 @@ function Untitled_2_Callback(hObject, eventdata, handles)
 % hObject    handle to Untitled_2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton5.
+function pushbutton5_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton5 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global BW
+%boundary of the tumour
+B = bwmorph(BW,'remove');
+axes(handles.axes1)
+imshow(B)
+
+
+% --- Executes on button press in pushbutton6.
+function pushbutton6_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton6 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+%contouring greyscaled image of brain
+global gray
+axes(handles.axes1)
+imcontour(gray);
+
+
+
+
+% --- Executes on button press in pushbutton7.
+function pushbutton7_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton7 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+%contouring tumour
+global img3
+axes(handles.axes1)
+imcontour(img3);
+
+
+
+
+% --- Executes on button press in pushbutton8.
+function pushbutton8_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton8 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+%c-label of tumour
+global img3
+C = contour(img3);
+axes(handles.axes1)
+clabel(C);
+
+% --- Executes on button press in pushbutton11.
+function pushbutton11_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton11 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global im2
+axes(handles.axes1)
+imshow(im2)
