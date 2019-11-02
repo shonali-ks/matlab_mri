@@ -146,19 +146,26 @@ function pushbutton4_Callback(hObject, eventdata, handles)
 global gauss img3 BW
 SE = strel('diamond',10);
 I= imerode(gauss,SE);
+
 %dialating the image
 se=strel('diamond',5);
 J = imdilate(I,se);
+
 %using morphological open for background estimation
 open = imopen(J,SE);
+
 %negating the image
 neg = imcomplement(open);
+
 %subtracting eroded image with negated image
 img1=I-neg;
+
 %subracting eroded image with background estimated one
 img2=I-open;
+
 %subracting two images
 img3=img1-img2;
+
 %threshold of tumour
 level = graythresh(img3);
 BW = im2bw(img3,level);
