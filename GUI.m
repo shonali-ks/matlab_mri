@@ -144,11 +144,11 @@ function pushbutton4_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global gauss img3 BW
-SE = strel('diamond',5);
+SE = strel('diamond',10);
 I= imerode(gauss,SE);
 
 %dialating the image
-se=strel('diamond',10);
+se=strel('diamond',5);
 J = imdilate(I,se);
 
 %using morphological open for background estimation
